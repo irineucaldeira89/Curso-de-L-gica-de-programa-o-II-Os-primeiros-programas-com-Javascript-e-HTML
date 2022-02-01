@@ -1,0 +1,163 @@
+Transcricao do Video:
+
+Nesta aula, aprenderemos a desenhar utilizando um pincel.
+
+Nas aulas anteriores, aprendemos que o document possui uma função que nos permite utilizar algo do mundo HTML dentro do mundo JavaScript.
+
+Para isso, criaremos a variável tela, e pediremos ao document.querySelector() o parâmetro "canvas" - note que está entre aspas:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+
+</script>
+
+JavaScript pode utilizar tanto as aspas ("), quanto apóstrofo ('), que nos referimos como aspas simples. É o que utilizaremos até o final do treinamento, apenas para simplificar a digitação.
+
+Assim, o documento tem o <canvas> e, dentro do JS, pedimos para o document executar a função querySelector() para pegar este <canvas> e passá-lo como valor na variável tela.
+
+Isso nos dá a área para escrever, mas e o pincel? Criaremos uma variável pincel, que receberá como valor a tela:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.
+
+</script>
+
+A tela, assim como o document sabe buscar um elemento da página por meio da tag, e fornecer um retorno para a variável, poderá passar o pincel.
+
+No mundo da programação podemos ter gráficos em 2D, 3D, 4D, enfim, portanto, precisamos informar à tela qual o tipo de pincel, ou seja, o contexto no qual escreveremos na tela. Para isso, utilizaremos o getContext() e passaremos o 2d como parâmetro:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+</script>
+
+Já temos a tela e o pincel, portanto podemos escrever na tela.
+
+Se o pincel foi dado pelo <canvas>, qualquer operação feita nele atuará sobre a tela.
+
+Nossa primeira operação será desenhar um retângulo de dimensões 600x400, para preencher todo o <canvas>. Para fazer isso, chamaremos o pincel, e pediremos para ele, com o operador ., preencher o retângulo.
+
+Preencher em Inglês é "fill", enquanto "rect" é a abreviação de retângulo:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillRect();
+</script>
+
+Ou seja, estamos pedindo ao JavaScript para preencher um retângulo. Entretanto, precisamos informar ao programa o ponto da tela onde desejamos começar a preencher.
+
+Assim como um pintor inicia sua pintura em um ponto específico da tela, nós também precisamos posicionar nosso pincel no <canvas> para podermos iniciar nosso preenchimento.
+
+Como sabemos, na matemática trabalhamos com a ideia de planos cartesianos, onde temos um eixo x, na horizontal, e um eixo y, na vertical.
+
+De acordo com as dimensões que especificamos, começaremos nosso preenchimento no canto superior esquerdo, isso significa que iniciaremos no ponto 0 tanto no eixo x quanto y.
+
+No código, estas coordenadas são inseridas entre os parênteses da instrução pincel.fillRect():
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillRect(0, 0);
+
+</script>
+
+Dessa coordenada, queremos criar uma forma que tenha 600 de largura, e 400 de altura, portanto, inseriremos isto em nosso código:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillRect(0, 0, 600, 400);
+
+</script>
+
+Salvaremos o programa e recarregaremos a página, e vemos na tela um retângulo preto, com as dimensões 600 (largura) x 400 (altura), posicionando o pincel a partir do ponto mais extremo no canto superior esquerdo.
+
+Como estamos utilizando o fill, ou "preencher", ele completa o restante da área com preto.
+
+Só que, a cor preta é muito forte, colocaremos uma cor mais suave. Para indicar qual a "tinta", temos de indicar o fillStyle:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillRect(0, 0, 600, 400);
+    pincel.fillStyle
+
+</script>
+
+Diferentemente de fillRect(), de getContext(), ou de querySelector(), o fillStyle não é uma função, e sim o que chamamos de propriedade. É equivalente a uma variável, por receber um valor, que é a cor. No caso, utilizaremos o 'lightgrey':
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillRect(0, 0, 600, 400);
+    pincel.fillStyle = 'lightgrey';
+
+</script>
+
+Salvaremos e recarregaremos a página. Entretanto o retângulo continua preto, por quê?
+
+Pensando em uma situação real, se pedimos para alguém pintar algo, a pessoa precisará da tinta. No caso, estamos passando as informações de cor após termos pintado, sem termos fornecido a tinta.
+
+Sendo assim, o fillStyle deve vir antes do fillRect:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'lightgrey';
+    pincel.fillRect(0, 0, 600, 400);
+
+</script>
+
+Salvaremos e recarregaremos. Deu certo! Temos nosso <canvas> em cinza claro. Qualquer desenho que fizermos respeitará a área que delimitamos nas dimensões.
+
+Aumentaremos as dimensões, para 800 de largura e 600 de altura:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'lightgrey';
+    pincel.fillRect(0, 0, 800, 600);
+
+</script>
+
+Salvaremos e recarregaremos a página. Não aconteceu nada. Isso porque, por mais que tenhamos informado novas dimensões, o máximo que caberá em nosso <canvas> é 600x400, portanto, respeitaremos isso.

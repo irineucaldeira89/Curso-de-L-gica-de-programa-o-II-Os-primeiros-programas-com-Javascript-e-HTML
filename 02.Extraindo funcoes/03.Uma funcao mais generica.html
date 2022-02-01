@@ -1,0 +1,291 @@
+Transcricao do Video:
+
+Nesta aula, veremos como podemos deixar nossa função genérica, para que possa funcionar para diferentes objetos.
+
+O fillRect e o strokeRect não poderão ser o mesmo para todos, deverá receber parâmetros diferentes para cada objeto que o usuário deseje criar. Faremos com que ela seja capaz de aceitar o parâmetro x, que será aceito em fillRect() e strokeRect():
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, 0, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, 0, 50, 50);
+
+}
+
+desenhaQuadradoVerde();
+desenhaQuadradoVerde();
+desenhaQuadradoVerde();
+
+</script>
+
+Assim, da próxima vez que chamarmos a função desenhaQuadradoVerde() faremos com que o primeiro inicie em 0, o segundo em 50, e o terceiro em 100:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, 0, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, 0, 50, 50);
+
+}
+
+desenhaQuadradoVerde(0);
+desenhaQuadradoVerde(50);
+desenhaQuadradoVerde(100);
+
+</script>
+
+Salvaremos e recarregaremos. Temos assim os três quadrados, lado a lado.
+
+Recapitulando:
+
+Ao chamarmos a função desenhaQuadradoVerde() e passarmos 0 como parâmetro, este número ocupa o parâmetro x e é utilizado na coordenada X do fillRect e do strokeRect. Na próxima chamada da função, o parâmetro passado será 50, e este será o número considerado no fillRect e no strokeRect, e assim sucessivamente.
+
+Com isso, conseguimos escrever um código genérico, para desenhar o quadrado verde.
+
+Mas e se quisermos alinhar os quadrados não mais no eixo X, e sim no eixo Y? Nesta hipótese, além do x, teremos também o parâmetro y:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, 0, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, 0, 50, 50);
+
+}
+
+desenhaQuadradoVerde(0);
+desenhaQuadradoVerde(50);
+desenhaQuadradoVerde(100);
+
+</script>
+
+Portanto, substituiremos os 0 por y em nosso código construtor e, no chamamento da função, teremos que passar dois parâmetros, da seguinte forma:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadradoVerde(0, 0);
+desenhaQuadradoVerde(0, 50);
+desenhaQuadradoVerde(0, 100);
+
+</script>
+
+Salvaremos e recarregaremos o programa. Temos todos os quadrados alinhados verticalmente, no lado esquerdo da tela.
+
+E se agora quisermos criar um quadrado vermelho? Podemos copiar o código da função que já temos e realizar algumas alterações.
+
+Primeiro, alteraremos o nome dela, para desenhaQuadradoVermelho, e onde temos 'green' alteraremos para 'red':
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+    function desenhaQuadradoVermelho(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'red';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadradoVerde(0, 0);
+desenhaQuadradoVerde(0, 50);
+desenhaQuadradoVerde(0, 100);
+
+</script>
+
+Em seguida, alteraremos um dos chamados da função para desenhaQuadradoVermelho:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadradoVerde(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+    function desenhaQuadradoVermelho(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'red';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadradoVerde(0, 0);
+desenhaQuadradoVermelho(0, 50);
+desenhaQuadradoVerde(0, 100);
+
+</script>
+
+Salvaremos e recarregaremos a página. Assim, temos dois quadrados verdes nas pontas, e um vermelho ao meio.
+
+E se quisermos quadrados de outras cores? Podemos passar a cor também como um parâmetro, assim não precisaremos alterar todas as vezes que quisermos um quadrado com uma nova cor.
+
+Assim, a função passará a se chamar apenas desenhaQuadrado:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadrado(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'green';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadrado(0, 0);
+desenhaQuadrado(0, 50);
+desenhaQuadrado(0, 100);
+
+</script>
+
+Primeiro, teremos que passar um parâmetro a mais, que será a cor:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadrado(x, y) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'red';
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadrado(0, 0, 'blue');
+desenhaQuadrado(0, 50, 'red');
+desenhaQuadrado(0, 100, 'yellow');
+
+</script>
+
+Em seguida, teremos que informar à função que ela receberá mais um parâmetro, na própria construção da função, que chamaremos de cor, e em vez de termos a cor no fillStyle, substituiremos também por cor:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadrado(x, y, cor) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = cor;
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+}
+
+desenhaQuadrado(0, 0, 'blue');
+desenhaQuadrado(0, 50, 'red');
+desenhaQuadrado(0, 100, 'yellow');
+
+</script>
+
+Salvaremos e recarregaremos a página. Temos a exibição dos três quadrados alinhados verticalmente, o primeiro na cor azul, em seguida na cor vermelha, e por último na cor amarela.
+
+Como podemos observar, a ideia de função é importante para economizarmos linhas de código, e deixá-lo mais legível.
+
+Retomaremos o desenho com os quadrados verdes, alinhados horizontalmente, no eixo X:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function desenhaQuadrado(x, y, cor) {
+
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = cor;
+        pincel.fillRect(x, y, 50, 50);
+        pincel.strokeStyle = 'black';
+        pincel.strokeRect(x, y, 50, 50);
+
+}
+
+desenhaQuadrado(0, 0, 'green');
+desenhaQuadrado(50, 0, 'green');
+desenhaQuadrado(100, 0, 'green');
+
+</script>
+
+Salvaremos e recarregaremos, confirmando a linha horizontal com três quadrados verdes.
+
+
+

@@ -1,0 +1,30 @@
+Nesta aula, aprendemos sobre as vantagens de se utilizar funções e como unir funções e loops, uma prática muito comum em lógica de programação.
+
+A partir do que vimos, selecione as alternativas corretas:
+
+*** Resposta Correta:
+
+B:
+
+Os loops podem ser utilizados em conjunto com funções para automatizar algumas tarefas de código
+
+É muito comum chamarmos funções para serem executadas dentro de loops, pois assim passamos para o programa a tarefa de controlar a quantidade de vezes que a função é executada, quando parar a execução e com quais informações ela vai trabalhar a cada vez - desde que não tenha erros no código que nós escrevemos!
+
+D:
+
+Nos exemplos de loops feitos no vídeo:
+
+var x = 0;
+
+while(x < 600) {
+  desenhaQuadrado(x, 0, 'green');
+  x = x + 50;
+}
+e
+
+for(var x = 0; x < 600; x = x + 50) {
+  desenhaQuadrado(x, 0, 'green');
+}
+O valor de x usado como condição para o loop (x = x + 50) é exatamente o mesmo passado como parâmetro para a função desenhaQuadrado(x, 0, ‘green’).
+
+Nos exemplos da aula, x é uma variável, ou seja, um espaço na memória onde podemos guardar valores e utilizá-los no código. Então, se a variável x guarda o valor 0 no início do código, em todos os lugares onde passarmos x no código, o programa vai automaticamente substituir pelo valor de 0. Essa lógica continua funcionando depois de modificarmos o valor de x, por exemplo com a instrução x = x + 50;.

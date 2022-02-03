@@ -1,0 +1,251 @@
+Dessa vez, só temos o código que exibe o canvas e desenha um círculo, mas a função desenhaCirculo não está associada a nenhum evento do JavaScript:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(evento) {
+
+        var x = evento.pageX - tela.offsetLeft;
+        var y = evento.pageY - tela.offsetTop;
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2 * 3.14);
+        pincel.fill();
+        console.log(x + ',' + y);
+
+    }
+
+</script>
+
+O desafio agora é o seguinte. Se andarmos com o ponteiro do mouse sobre a tela enquanto o botão esquerdo é pressionado, vamos desenhar um círculo. Isso significa que enquanto não soltarmos o botão esquerdo, desenharemos um círculo ao lado do outro, que na verdade dará um efeito que estamos passando um pincel na tela. Se soltarmos o botão esquerdo, o ato de mover o mouse sob a tela não deverá desenhar nada. No final, queremos um efeito parecido com ferramentas como Paint Brush ou Photoshop, que permite o usuário desenhar na tela.
+
+O evento do JavaScript que permite capturar o movimento do mouse, e logo sua coordenada, é o onmousemove, contudo esse evento não é capaz de saber se o botão do mouse está clicando ou não. E agora?
+
+Existem os eventos, onmousedown e onmouseup. O primeiro é disparado toda vez que o botão esquerdo do mouse é pressionado e o segundo quando ele é solto. Sendo assim, de alguma maneira, nossa função desenhaCirculo só pode desenhar na tela se o botão estiver pressionado, se não estiver, nada acontecerá.
+
+E agora, como resolver? DICA: as funções passadas para onmousedown e onmouseup podem alterar o valor de uma variável, que será usada por desenhaCirculo para saber se ele desenhará ou não um círculo. Complicou? Nada que um momento de reflexão não resolva.
+
+Opinião do instrutor:
+
+Veja que a problemática está toda em saber se desenhamos ou não na tela enquanto passamos o mouse sob a mesma. E sabemos que a condição está atrelada ao botão esquerdo do mouse estar pressionado.
+
+Sendo assim, vamos declarar uma variável booleana chamada desenha, que começa como false. É essa variável que será utilizada pela função desenhaCirculo para saber se ela deve ou não desenhar:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+    function desenhaCirculo(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+        }
+
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousemove = desenhaCirculo;
+
+</script>
+
+Se fizermos um teste, vamos passar o mouse pela tela e nada será desenhado. Faz todo sentido, porque a variável desenha é falsa e nunca a condição if de desenhaCirculo, que depende que essa variável seja verdadeira, será executada.
+
+Na explicação do exercício, falei sobre onmousedown e sobre o onmouseup e que o primeiro serve para executar um código quando o mouse é pressionado e o segundo quando o botão do mouse é solto. Que tal então criar duas funções, a primeira habilitaDesenho e a segunda desabilitaDesenho e associar uma com cada um desses eventos. Qual será o código de cada uma delas? A primeira atribui true para a variável desenha e a segunda atribui false. Como a função desenhaCirculo depende da variável que foi alterada, conseguimos o resultado esperado:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+    function desenhaCirculo(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+        }
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousemove = desenhaCirculo;
+
+    function habilitaDesenhar() {
+
+        desenha = true;
+    }
+
+    function desabilitaDesenhar() {
+
+        desenha = false;
+    }
+
+    tela.onmousedown = habilitaDesenhar;
+
+    tela.onmouseup = desabilitaDesenhar;
+
+</script>
+
+Faça um teste! Quando você clicar com o botão esquerdo do mouse sem soltá-lo, a variável desenha será true. Enquanto você não soltar, ela continuará com esse valor, sendo assim, ao mover o mouse pela tela com o botão pressionado, a função desenhaCirculo desenhará o circulo a cada movimento que fizermos. Contudo, se soltarmos o botão, a variável desenha receberá false, pois a função desabilitaDesenhar mudará a variável desenha para false.
+
+BÔNUS: FUNÇÕES ANÔNIMAS
+
+Se você chegou até aqui é porque quer ficar ainda melhor em lógica de programação e talvez esteja querendo se preparar para aprender com mais detalhes a linguagem JavaScript. E por isso vou antecipar um conhecimento que você só veria em um curso específico de JavaScript. Mesmo este curso sendo de lógica e focar no essencial da linguagem para conseguirmos criar coisas, esse assunto é interessante.
+
+Veja que declaramos as funções habilitaDesenhar e desabilitaDesenhar para lidar com o "liga e desliga" da habilidade de desenharmos com o mouse. Certo? Contudo, o que acontece se eu chegar nessas duas funções e remover os seus nomes? Nosso código, que não funcionará, ficará assim:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+    function desenhaCirculo(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+        }
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousemove = desenhaCirculo;
+
+    // função não tem mais nome, se não tem nome é anônima
+    function() {
+
+        desenha = true;
+    }
+
+    // função não tem mais nome, se não tem nome é anônima
+    function() {
+
+        desenha = false;
+    }
+
+    tela.onmousedown = habilitaDesenhar; // habilitaDesenhar é um nome que não existe mais
+
+    tela.onmouseup = desabilitaDesenhar; // desabilitaDesenhar é um nome que não existe mais
+
+</script>
+
+Como as duas funções não possuem mais um nome, são chamadas de funções anônimas. Isso mesmo, uma função anônima é aquela que não possui um nome e nosso código dá um erro porque se elas não possuem nome, como iremos chamá-las ou atribuí-las aos eventos onmousedown e onmouseup, certo?
+
+Então, como iremos passar um código para tela.onmousedown e tela.onmouseup, se não temos mais o nome da função? É aqui que eu quero pedir a atenção de vocês. Uma função anônima não pode existir solta, porque como não tem um nome, ninguém será capaz de chamá-la, mas podemos atribuir a função anônima diretamente a uma variável ou a uma propriedade, como tela.onmousedown e tela.onmouseup. Veja:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+    function desenhaCirculo(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+        }
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousemove = desenhaCirculo;
+
+    // atribuindo diretamente a função anônima
+    tela.onmousedown = function() {
+
+        desenha = true;
+    }
+
+    // atribuindo diretamente a função anônima
+     tela.onmouseup = function() {
+
+        desenha = false;
+    }
+
+</script>
+
+Podemos fazer a mesma coisa com a função desenhaCirculo:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var desenha = false;
+
+  // atribuindo diretamente a função anônima
+   tela.onmousemove = function(evento) {
+
+        if(desenha) {
+            var x = evento.pageX - tela.offsetLeft;
+            var y = evento.pageY - tela.offsetTop;
+            pincel.fillStyle = 'blue';
+            pincel.beginPath();
+            pincel.arc(x, y, 10, 0, 2 * 3.14);
+            pincel.fill();
+        }
+        console.log(x + ',' + y);
+    }
+
+    tela.onmousedown = function() {
+
+        desenha = true;
+    }
+
+     tela.onmouseup = function() {
+
+        desenha = false;
+    }
+
+</script>
+
+A ideia aqui é já ir plantando na cabeça de vocês que isso é possível, para quando vocês saírem do mundo da lógica e forem aprender com mais detalhes a linguagem JavaScript entender o que isso significa.
+

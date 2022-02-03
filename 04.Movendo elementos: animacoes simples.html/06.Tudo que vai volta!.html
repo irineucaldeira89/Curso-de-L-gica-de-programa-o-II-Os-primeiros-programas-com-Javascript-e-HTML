@@ -1,0 +1,178 @@
+Durante a aula, aprendemos a animar um círculo que se movimentava da esquerda para direita, até deixar a área visível do canvas, nossa tela.
+
+Vamos relembrar o código:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    function atualizaTela() {
+
+        limpaTela();
+        desenhaCirculo(x, 20, 10);
+        x++;
+
+    }
+
+    setInterval(atualizaTela, 10);
+
+</script>
+
+Altere o código para que o círculo, assim que chegar no canto direito da tela, volte. No final, o círculo deve ficar indo e voltando eternamente. Existem várias formas de se conseguir esse resultado, assim como tudo no universo da programação. Depois de quebrar a cabeça, veja uma das soluções propostas pelo instrutor, clicando em VER OPINIÃO DO INSTRUTOR.
+
+Opinião do instrutor:
+
+Olá aluno! Para sabermos se a bolinha vai da esquerda para a direita ou da direta para esquerda, precisamos descobrir qual o seu sentido. A bolinha começa da esquerda para direita, mas quando sua posição x for superior a 600, precisamos inverter seu sentido. A mesma coisa quando estiver indo da direita para a esquerda e sua posição for menor que 0, ou seja, precisamos inverter seu sentido mais uma vez.
+
+Sendo assim, vamos criar uma variável chamada sentido. Ela começará com o valor 1, indicando que nossa variável x deve ser incrementada de 1 em 1. Quando x for maior que 600, sentido receberá -1, o que fará o decremento da variável x:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    var sentido = 1;
+
+    function atualizaTela() {
+
+            limpaTela();
+            desenhaCirculo(x, 20, 10);
+            x++;
+
+    }
+
+    setInterval(atualizaTela, 10);
+
+</script>
+
+Agora, dentro da função atualizaTela, antes de desenharmos nossa bolinha, vamos verificar se precisamos alterar o valor de sentido:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    var sentido = 1;
+
+    function atualizaTela() {
+
+        limpaTela();
+
+        if( x > 600) {
+            sentido = -1
+        } else if (x < 0) {
+            sentido = 1;
+        } 
+
+        desenhaCirculo(x, 20, 10);
+    }
+
+    setInterval(atualizaTela, 10);
+
+</script>
+
+Agora que sempre verificamos se sentido precisa ser alterado, logo depois de desenharmos nosso círculo, vamos usar o valor da nossa variável na hora do incremento de x:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    var sentido = 1;
+
+    function atualizaTela() {
+
+        limpaTela();
+
+        if( x > 600) {
+            sentido = -1;
+        } else if (x < 0) {
+            sentido = 1;
+        } 
+
+        desenhaCirculo(x, 20, 10);
+        x = x + sentido;
+    }
+
+    setInterval(atualizaTela, 10);
+
+</script>
+
+Verifique o resultado!

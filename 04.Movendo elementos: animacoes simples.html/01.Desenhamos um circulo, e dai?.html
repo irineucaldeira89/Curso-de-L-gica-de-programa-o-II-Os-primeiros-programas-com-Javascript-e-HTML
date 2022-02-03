@@ -1,0 +1,120 @@
+Transcricao do Video:
+
+Nesta aula, daremos início ao programa4.html. Nele, temos um código na linha dos que já utilizamos em aulas anteriores:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+</script>
+
+Aplicaremos nossos conhecimentos de lógica de programação para animarmos uma esfera na tela, e termos ferramentas para conseguirmos criar um jogo simples.
+
+A primeira coisa a fazer é criar uma esfera na tela.
+
+Inverteremos um pouco a ordem, e chamaremos primeiro a função, para analisarmos o que ela precisará receber como parâmetro:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    desenhaCirculo();
+</script>
+
+Passaremos as coordenadas X e Y, e o tamanho do raio, que será 10:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    desenhaCirculo(20, 20, 10);
+
+</script>
+
+Como ainda não definimos a função, ela não poderá ser executada. Começaremos a construção dela passando os parâmetros, que serão x, y, raio - de acordo com o tipo de valor que cada um receberá -, em seu bloco, incluiremos fillStyle na cor azul, o beginPath, e o arc, que receberá o ponto onde queremos plotar a esfera no <canvas>:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * 3.14);
+    }
+
+    desenhaCirculo(20, 20, 10);
+
+</script>
+
+Como sabemos, na matemática, o valor de Pi é equivalente a 3.14. Como sabemos, no JS temos algumas funções que iniciam com Math. e nos dão funcionalidades básicas, justamente, temos o Math.PI, que é o que utilizaremos em nosso código:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+
+    }
+
+    desenhaCirculo(20, 20, 10);
+
+</script>
+
+Para preenchermos o círculo, utilizaremos o pincel.fill:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    desenhaCirculo(20, 20, 10);
+
+</script>
+
+Salvaremos e recarregaremos o programa, temos um círculo azul no canto superior esquerdo da tela. Para desenharmos outra esfera, basta repetirmos o chamado à função, com novos parâmetros, que sejam diferentes dos primeiros.
+
+Adiante, aprenderemos a animar esta esfera.
+

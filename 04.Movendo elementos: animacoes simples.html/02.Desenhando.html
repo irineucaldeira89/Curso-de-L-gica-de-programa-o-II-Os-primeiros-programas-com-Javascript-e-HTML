@@ -1,0 +1,129 @@
+Transcricao do Video:
+
+Nesta aula, daremos continuidade ao processo de animação.
+
+Para chegarmos a este resultado, faremos com que a esfera saía de um ponto nas coordenadas iniciais, e chegue em um novo, que definiremos com novas coordenadas. Para movimentarmos nossa esfera horizontalmente, manipularemos o valor da coordenada X.
+
+Como vimos, há o método for para fazermos este tipo de alteração reiterada de uma única propriedade. Criaremos nele uma variável x, que receberá 20, uma condição x < 600, e incremento de x = x + 1, que, como sabemos, pode ser feito com o x++:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+
+    }
+
+        for(var x = 20; x < 600; x++) {
+
+        }
+
+    desenhaCirculo(20, 20, 10);
+
+</script>
+
+Colocaremos a função desenhaCirculo() dentro do for(), substituiremos o parâmetro 20 pelo x e manteremos os demais, pois queremos que a esfera se mova somente no eixo X:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+
+    }
+
+        for(var x = 20; x < 600; x++) {
+            desenhaCirculo(x, 20, 10);
+        }
+</script>
+
+Salvaremos e recarregaremos o programa. Em vez da animação temos a imagem de uma linha em azul. Isso aconteceu porque demos o espaçamento de apenas 1 pixel entre as esferas, assim, quase todas ficaram umas sobre as outras, dando a ilusão de formarem uma única linha.
+
+Para resolvermos isso, utilizaremos o pincel.clearRect(), o que indicará ao JS que ele deve limpar o retângulo:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+             for(var x = 20; x < 600; x++) {
+            pincel.clearRect(0, 0, 600, 400);
+            desenhaCirculo(x, 20, 10);
+
+        }
+
+</script>
+
+Após salvarmos e recarregarmos, veremos que o fundo de <canvas> ficou completamente branco, e visualizamos apenas uma esfera, no canto superior direito.
+
+Por que ela ainda não está animada? Isso ocorre porque a nossa CPU faz este processo muito rapidamente, antes que possamos visualizar o processo, conseguimos ver apenas o resultado final.
+
+A ideia é podermos esperar alguns segundos entre o surgimento das esferas.
+
+Além disso, para esclarecer a função do clearRect, criaremos a função limpaTela, que receberá nossa função. Assim, chamaremos o limpaTela() já dentro do nosso for():
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+        function limpaTela() {
+
+            pincel.clearRect(0, 0, 600, 400);
+
+        }
+
+        for(var x = 20; x < 600; x++) {
+            limpaTela();
+            desenhaCirculo(x, 20, 10);
+
+        }
+</script>
+
+Assim as funcionalidades ficam mais evidentes para quem lê nosso código. Vimos que o for é uma solução ruim, porque fará com que o processo de animação ocorra rápido demais para que sejamos capazes de perceber. Adiante, veremos como podemos resolver este problema.
+
+

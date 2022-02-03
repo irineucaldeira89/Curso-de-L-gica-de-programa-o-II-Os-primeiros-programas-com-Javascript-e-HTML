@@ -1,0 +1,25 @@
+De modo geral, uma função possui uma série de instruções para executar um único comportamento, assim como a seguinte função e sua chamada:
+
+function somarDoisValores(valor1, valor2) {
+    resultadoDaSoma = valor1 + valor2
+}
+
+console.log(somarDoisValores(200, 1000))
+
+Com base no código acima, analise as afirmações a seguir e assinale a que estiver correta.
+
+*** Resposta Correta:
+
+O valor undefined será exibido no console.
+
+A soma foi realizada e armazenada na variável resultadoDaSoma, porém, não retornamos o valor através da palavra return, como mostra o código abaixo:
+
+function somarDoisValores(valor1, valor2) {
+    resultadoDaSoma = valor1 + valor2
+    return resultadoDaSoma
+}
+
+console.log(somarDoisValores(200, 1000))
+
+
+

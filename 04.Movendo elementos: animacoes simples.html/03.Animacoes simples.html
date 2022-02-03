@@ -1,0 +1,279 @@
+Transcricao do Video:
+
+Dando continuidade ao nosso projeto, aprenderemos a animar nossa esfera para que ela viaje de um ponto da tela até outro.
+
+Removeremos o for:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+        function limpaTela() {
+
+            pincel.clearRect(0, 0, 600, 400);
+        }
+</script>
+
+Primeiro, trabalharemos com o conceito de como podemos chamar um código com intervalos de tempo.
+
+Em seguida, criaremos a função exibeMensagemNoConsole() que terá um console.log() com a mensagem "Chamei função", e chamaremos em seguida:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+        function limpaTela() {
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    function exibeMensagemNoConsole() {
+
+        console.log('Chamei função');
+
+    }
+
+    exibeMensagemNoConsole();
+
+</script>
+
+Salvaremos a página e recarregaremos. Em seguida, abriremos o console e leremos:
+
+Chamei função
+
+Faremos com que esta mensagem seja exibida com intervalos de tempo. Para isso, utilizaremos a função setInterval. Ela aceita receber, como parâmetro, a função que você deseja chamar e, depois, a quantidade de tempo que desejamos dar de intervalo em milissegundos. Utilizaremos 1000 milissegundos, que equivalem a 1 segundo:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+    pincel.clearRect(0, 0, 600, 400);
+    }
+
+    function exibeMensagemNoConsole() {
+    console.log('Chamei função');
+    }
+
+    setInterval(exibeMensagemNoConsole, 1000);
+
+</script>
+
+Após recarregarmos a página, observe que o console exibe a mensagem, assim como anteriormente, e que surge um contador ao lado esquerdo da frase "Chamei função". Este contador se refere ao número de vezes em que ele está realizando a impressão, o JavaScript faz uso de um recurso mais elegante, em vez de gerar isto visualmente.
+
+Escolhemos o tempo de 1 segundo mas poderíamos ter delimitado qualquer outro intervalo, isso dependerá do projeto e exigências específicas.
+
+Entretanto, nosso objetivo não é imprimir a mensagem, e sim realizar a função atualizaTela, que criaremos agora:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+    pincel.clearRect(0, 0, 600, 400);
+    }
+
+    function atualizaTela() {
+    }
+</script>
+
+Sua funcionalidade será atualizar a tela em determinados intervalos de tempo. Ela chamará a função desenhaCirculo(), que terá como parâmetros as posições X, Y, e o raio da circunferência:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+    pincel.clearRect(0, 0, 600, 400);
+    }
+
+    function atualizaTela() {
+        desenhaCirculo(20, 20, 10);
+    }
+
+    setInterval(atualizaTela, 20);
+
+</script>
+
+Lembre-se de salvar a página. Após recarregá-la, temos a exibição da esfera azul no canto superior esquerdo da tela. Ela não está animada, isso significa que não deu certo?
+
+A nossa função está correta, entretanto, como passamos o mesmo valor de x, estão sendo desenhadas várias esferas sobrepostas. Para consertar isso, a cada chamada de tela, precisamos passar um novo valor de x, ou seja, incrementar x (lembrando de declarar a variável x com valor 20 antes):
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    function atualizaTela() {
+
+    desenhaCirculo(x, 20, 10);
+    x++;
+
+    }
+
+    setInterval(atualizaTela, 20);
+
+</script>
+
+Para que não tenhamos o problema de esferas sobrepostas, precisamos inserir, antes de desenhaCirculo(), o limpaTela():
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+    pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    function atualizaTela() {
+
+    limpaTela();
+    desenhaCirculo(x, 20, 10);
+    x++;
+    }
+
+    setInterval(atualizaTela, 20);
+
+</script>
+
+Salvaremos e recarregaremos a tela. Funcionou! Temos nossa esfera viajando do canto superior esquerdo da tela, até o canto superior direito. Para que a animação fique mais rápida, basta alterar o segundo parâmetro de setInterval, deixaremos como 10:
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    pincel.fillStyle = 'lightgray';
+    pincel.fillRect(0, 0, 600, 400);
+
+    function desenhaCirculo(x, y, raio) {
+
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+    }
+
+    function limpaTela() {
+    pincel.clearRect(0, 0, 600, 400);
+    }
+
+    var x = 20;
+
+    function atualizaTela() {
+
+    limpaTela();
+    desenhaCirculo(x, 20, 10);
+    x++;
+    }
+
+    setInterval(atualizaTela, 10);
+
+</script>
+
+Recapitulando:
+
+O método setInterval() chama atualizaTela();
+Este, quando executado, faz o limpaTela(), desenhaCirculo() e incrementa o valor de x;
+O setInterval() aguarda 20 milisegundos, para repetir o processo, sempre incrementando o valor de x, o que faz com que nossa esfera "se mova" para a direita.
+Esta lógica é fundamental quando pensamos em animações, ou mesmo em criar jogos. Vamos para os exercícios!
+
+
